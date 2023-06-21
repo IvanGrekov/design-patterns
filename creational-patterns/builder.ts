@@ -1,4 +1,4 @@
-class Developer {
+export class Developer {
     private language = '';
     private experience = 0;
     private salary = 0;
