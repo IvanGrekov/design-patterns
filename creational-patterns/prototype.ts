@@ -1,8 +1,8 @@
-abstract class Protot {
-    public abstract clone(): Protot; 
+export abstract class Prototype {
+    public abstract clone(): Prototype;
 }
 
-export abstract class Developer extends Protot {
+abstract class Developer extends Prototype {
     constructor(protected language: string, protected salary: number) {
         super();
     }
@@ -22,3 +22,7 @@ class FrontendDeveloper extends Developer {
 
 const frontendDeveloper1 = new FrontendDeveloper('JavaScript', 1000);
 const frontendDeveloper2 = frontendDeveloper1.clone();
+
+console.log(frontendDeveloper1.getInfo());
+console.log(frontendDeveloper2.getInfo());
+console.log(frontendDeveloper1 === frontendDeveloper2);

@@ -1,38 +1,48 @@
-abstract class Staff {
-    constructor(protected sallary: number) {}
+export abstract class Developer {
+    constructor(protected language: string, protected salary: number) {}
 
-    public abstract work(): void;
+    abstract work(): string;
 }
 
-class Employee extends Staff {
-    public work(): void {
-        console.log(`I am employee. I am working for ${this.sallary}`);
+class FrontendDeveloper extends Developer {
+    constructor(protected salary: number) {
+        super('Javascript', salary);
+    }
+
+    public work(): string {
+        return `I am frontend developer. I am working with ${this.language} for ${this.salary}`;
     }
 }
 
-class Manager extends Staff {
-    public work(): void {
-        console.log(`I am manager. I am managing for ${this.sallary}`);
+class BackendDeveloper extends Developer {
+    constructor(protected salary: number) {
+        super('Java', salary);
+    }
+
+    public work(): string {
+        return `I am backend developer. I am working with ${this.language} for ${this.salary}`;
     }
 }
 
-const staffMap = {
-    Employee,
-    Manager,
+const developerMap = {
+    FrontendDeveloper,
+    BackendDeveloper,
 }
 
-abstract class StaffFactory {
-    public static createStaff(type: keyof typeof staffMap, salary: number): Staff {
-        return new staffMap[type](salary);
+class DeveloperFactory {
+    protected constructor() {}
+
+    static createDeveloper(developerType: keyof typeof developerMap, salary: number) {
+        return new developerMap[developerType](salary);
     }
 }
 
-const employee1 = StaffFactory.createStaff('Employee', 1000);
-const employee2 = StaffFactory.createStaff('Employee', 2000);
-const manager1 = StaffFactory.createStaff('Manager', 2000);
-const manager2 = StaffFactory.createStaff('Manager', 3000);
+const feDeveloper1 = DeveloperFactory.createDeveloper('FrontendDeveloper', 1000);
+const feDeveloper2 = DeveloperFactory.createDeveloper('FrontendDeveloper', 2000);
+const beDeveloper1 = DeveloperFactory.createDeveloper('BackendDeveloper', 2000);
+const beDeveloper2 = DeveloperFactory.createDeveloper('BackendDeveloper', 3000);
 
-employee1.work();
-employee2.work();
-manager1.work();
-manager2.work();
+console.log(feDeveloper1.work());
+console.log(feDeveloper2.work());
+console.log(beDeveloper1.work());
+console.log(beDeveloper2.work());

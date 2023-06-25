@@ -1,45 +1,41 @@
 export class Developer {
-    private language = '';
-    private experience = 0;
-    private salary = 0;
-
-    constructor() {}
-
-    public setLanguage(language: string): Developer {
-        this.language = language;
-
-        return this;
-    }
-
-    public setExperience(experience: number): Developer {
-        this.experience = experience;
-
-        return this;
-    }
-
-    public setSalary(salary: number): Developer {
-        this.salary = salary;
-
-        return this;
-    }
+    constructor(
+        protected language: string,
+        protected experience: number,
+        protected salary: number
+    ) {}
 
     public getInfo(): string {
         return `I am ${this.language} developer. I have ${this.experience} years of experience and my salary is ${this.salary}`;
     }
 }
 
-class FrontendBuilder {
-    private static Builder = Developer;
+class DeveloperBuilder extends Developer {
+    constructor(language = '', experience = 0, salary = 0) {
+        super(language, experience, salary);
+    }
 
-    private constructor() {}
+    public setLanguage(language: string): DeveloperBuilder  {
+        this.language = language;
 
-    public static make(): Developer {
-        return new this.Builder().setLanguage('JS').setExperience(1).setSalary(1000);
+        return this;
+    }
+
+    public setExperience(experience: number): DeveloperBuilder  {
+        this.experience = experience;
+
+        return this;
+    }
+
+    public setSalary(salary: number): DeveloperBuilder  {
+        this.salary = salary;
+
+        return this;
     }
 }
 
-const developer1 = new Developer().setExperience(1).setLanguage('JS').setSalary(1000);
-const developer2 = FrontendBuilder.make();
+const developer1 = new DeveloperBuilder().setExperience(1).setLanguage('JS').setSalary(1000);
+const developer2 = new DeveloperBuilder('TS', 2, 2000);
 
 console.log(developer1.getInfo());
 console.log(developer2.getInfo());

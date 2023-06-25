@@ -1,12 +1,15 @@
+
 class Singleton {
-    private static instance: Singleton;
-    private constructor() {}
+    protected static instance: Singleton;
+
+    protected constructor() {}
+
     public static getInstance(): Singleton {
-        if (!Singleton.instance) {
-            Singleton.instance = new Singleton();
+        if (!this.instance) {
+            this.instance = new Singleton();
         }
 
-        return Singleton.instance;
+        return this.instance;
     }
 
     private counter = 0;
