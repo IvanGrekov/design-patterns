@@ -3,23 +3,19 @@ interface IRenderer {
 }
 
 class VectorRenderer implements IRenderer {
-    render(shape: string): void {
-        console.log(`Drawing "${shape}" as vector`);
+    public render(shape: string): void {
+        console.log(`Drawing "${shape}" in vector`);
     }
 }
 
 class RasterRenderer implements IRenderer {
-    render(shape: string): void {
-        console.log(`Drawing "${shape}" as pixels`);
+    public render(shape: string): void {
+        console.log(`Drawing "${shape}" in pixels`);
     }
 }
 
 abstract class Shape {
-    protected renderer: IRenderer;
-
-    constructor(renderer: IRenderer) {
-        this.renderer = renderer;
-    }
+    constructor(protected renderer: IRenderer) {}
 
     public abstract draw(): void;
 }
@@ -31,6 +27,16 @@ class Square extends Shape {
 
     public draw(): void {
         this.renderer.render(`Square with side ${this.sideLength}`);
+    }
+}
+
+class Circle extends Shape {
+    constructor(protected radius: number, protected renderer: IRenderer) {
+        super(renderer);
+    }
+
+    public draw(): void {
+        this.renderer.render(`Circle with radius ${this.radius}`);
     }
 }
 

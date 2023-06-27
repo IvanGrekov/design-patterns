@@ -1,18 +1,24 @@
-export abstract class Developer {
-    constructor(protected language: string, protected salary: number) {}
+class TraineeDeveloper {
+    constructor(public language: string) {}
 
     public work() {
-        console.log(`I'm working with ${this.language}, for ${this.salary}`);
-    };
+        console.log(`I'm working with ${this.language}`);
+    }
 }
 
-class Frontend extends Developer {
+class Developer extends TraineeDeveloper {
+    constructor(public language: string, protected salary: number) {
+        super(language);
+    }
+
     public work() {
         super.work();
-        console.log('By the way, I\'m frontend developer');
-    };
+        console.log(`I'm working for ${this.salary}`);
+    }
 }
 
-const frontendDeveloper = new Frontend('JavaScript', 1000);
+const traineeDeveloper = new TraineeDeveloper('JavaScript');
+const developer = new Developer('TypeScript', 1000);
 
-frontendDeveloper.work();
+traineeDeveloper.work();
+developer.work();

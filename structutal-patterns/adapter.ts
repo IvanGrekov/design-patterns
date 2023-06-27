@@ -1,59 +1,39 @@
-interface AdvancedPlayer {
-    playWebm(fileName: string): void;
-    playMp4(fileName: string): void;
+interface IRequester {
+    request(): string;
 }
 
-
-class WebmPlayer implements AdvancedPlayer {
-    public playWebm(fileName: string): void {
-        console.log(`WebmPlayer. Playing webm file "${fileName}"`);
-    }
-
-    public playMp4(fileName: string): void {
-        console.log(`WebmPlayer. Playing mp4 file "${fileName}"`);
+class Requester implements IRequester {
+    public request(): string {
+        return 'Hello';
     }
 }
 
-class Mp4Player implements AdvancedPlayer {
-    public playWebm(fileName: string): void {
-        console.log(`Mp4Player. Playing webm file "${fileName}"`);
-    }
-
-    public playMp4(fileName: string): void {
-        console.log(`Mp4Player. Playing mp4 file "${fileName}"`);
+class SpecificRequester {
+    public specificRequest(): string {
+        return 'olleH';
     }
 }
 
-export interface IPlayer {
-    play(fileName: string): void;
-}
+class SpecificRequesterAdapter implements IRequester {
+    constructor(protected specificAdapter: SpecificRequester) {}
 
-class Player implements IPlayer {
-    constructor(private advancedPlayer: AdvancedPlayer) {}
+    public request(): string {
+        const specificAdapterResult = this.specificAdapter.specificRequest().split('').reverse().join('');
 
-    public play(fileName: string): void {
-        const fileExtension = fileName.split('.').pop();
-
-        switch (fileExtension) {
-            case 'webm':
-                this.advancedPlayer.playWebm(fileName);
-                break;
-            case 'mp4':
-                this.advancedPlayer.playMp4(fileName);
-                break;
-            default:
-                console.log('Unsupported file format');
-        }
+        return `ADAPTED: ${specificAdapterResult}`;
     }
 }
 
-const player1 = new Player(new WebmPlayer());
-const player2 = new Player(new Mp4Player());
 
-player1.play('file.webm');
-player1.play('file.mp4');
-player1.play('file.avi');
+const requester = new Requester();
+console.log(`Requester: ${requester.request()}`);
 
-player2.play('file.webm');
-player2.play('file.mp4');
-player2.play('file.avi');
+console.log('------------------');
+
+const specificRequester = new SpecificRequester();
+console.log(`SpecificRequester: ${specificRequester.specificRequest()}`);
+
+console.log('------------------');
+
+const specificRequestAdapter = new SpecificRequesterAdapter(specificRequester);
+console.log(`SpecificRequesterAdapter: ${specificRequestAdapter.request()}`);

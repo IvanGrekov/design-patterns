@@ -4,73 +4,51 @@ interface IProduct {
     price: number;
 }
 
-class Product {
+class Product implements IProduct {
     constructor(
-        protected id: IProduct['id'],
-        protected name: IProduct['name'],
-        protected price: IProduct['price']
+        public id: IProduct['id'],
+        public name: IProduct['name'],
+        public price: IProduct['price']
     ) {}
-
-    public getId(): IProduct['id'] {
-        return this.id;
-    }
-
-    public getName(): IProduct['name'] {
-        return this.name;
-    }
-
-    public getPrice(): IProduct['price'] {
-        return this.price;
-    }
 }
 
 class ProductsService {
-    protected products: Product[] = [];
+    constructor (protected products: IProduct[]) {}
 
-    constructor() {
-        this.products = [
-            new Product('1', 'IPhone', 1000),
-            new Product('2', 'Apple Watch', 500),
-            new Product('3', 'MacBook', 3000),
-        ];
-    }
-
-    public addProduct(product: Product): void {
-        this.products.push(product);
-    }
-
-    public getProducts(): Product[] {
+    public getProducts(): IProduct[] {
         return this.products;
+    }
+
+    public addProduct(product: IProduct): void {
+        this.products.push(product);
     }
 }
 
 class CartService {
-    protected cart: Product[] = [];
+    protected cart: IProduct[] = [];
 
-    public addProduct(product: Product): void {
-        const cartIncludesProduct = this.cart.some((cartProduct) => cartProduct.getId() === product.getId());
-        
-        if (cartIncludesProduct) {
-            console.warn('Product already in cart');
-        } else {
-            this.cart.push(product);
-        }
+    constructor (cart: IProduct[] = []) {
+        this.cart = cart;
     }
 
-    public getCart(): Product[] {
+    public addToCard(product: IProduct): void {
+        this.cart.push(product);
+    }
+
+    public getCart(): IProduct[] {
         return this.cart;
     }
 
-    public clearCart(): Product[] {
-        return this.cart = [];
+    public clearCart(): void {
+        this.cart = [];
     }
 }
 
 class OrderService {
-    public order(products: Product[]): void {
+    public makeOrder(products: IProduct[]): void {
         console.group('Ordering products:');
         products.forEach((product) => {
-            console.log(`Product: ${product.getName()}, price: ${product.getPrice()}`);
+            console.log(`Product: ${product.name}, price: ${product.price}`);
         });
         console.groupEnd();
     }
@@ -81,32 +59,32 @@ class ShopFacade {
     protected cartService: CartService;
     protected orderService: OrderService;
 
-    constructor() {
-        this.productsService = new ProductsService();
+    constructor(products: IProduct[]) {
+        this.productsService = new ProductsService(products);
         this.cartService = new CartService();
         this.orderService = new OrderService();
     }
 
-    public getProducts(): Product[] {
+    public getProducts(): IProduct[] {
         return this.productsService.getProducts();
     }
 
-    public addProductToCart(product: Product): void {
+    public addToCart(product: IProduct): void {
         const isProductAvailable = this.productsService.getProducts().includes(product);
 
         if (isProductAvailable) {
-            this.cartService.addProduct(product);
-            console.log(`Product "${product.getName()}" added to cart`);
+            this.cartService.addToCard(product);
+            console.log(`Product "${product.name}" added to cart`);
         } else {
-            console.warn('Product can\'t bought');
+            console.warn('Product can\'t be bought');
         }
     }
 
-    public order(): void {
+    public makeOrder(): void {
         const cart = this.cartService.getCart();
 
         if (cart.length) {
-            this.orderService.order(cart);
+            this.orderService.makeOrder(cart);
             this.cartService.clearCart();
         } else {
             console.warn('Cart is empty');
@@ -114,17 +92,23 @@ class ShopFacade {
     }
 }
 
-const shop = new ShopFacade();
+const products = [
+    new Product('1', 'Product 1', 100),
+    new Product('2', 'Product 2', 200),
+    new Product('3', 'Product 3', 300),
+];
 
 const someProduct = new Product('4', 'Some product', 100);
-shop.addProductToCart(someProduct);
+
+const shop = new ShopFacade(products);
+
+shop.addToCart(someProduct);
 console.log('------------');
-const products = shop.getProducts();
-console.log('products', products);
+console.log('products', shop.getProducts());
 console.log('------------');
-shop.addProductToCart(products[0]);
-shop.addProductToCart(products[1]);
+shop.addToCart(products[0]);
+shop.addToCart(products[1]);
 console.log('------------');
-shop.order();
+shop.makeOrder();
 console.log('------------');
-shop.order();
+shop.makeOrder();
