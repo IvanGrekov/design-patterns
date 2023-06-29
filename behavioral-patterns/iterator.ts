@@ -1,20 +1,19 @@
-interface IIterator<T> {
-    next(): string | T;
-    hasNext(): boolean;
-}
+// https://refactoring.guru/design-patterns/iterator/typescript/example#example-0
 
-class Iterator<T> implements IIterator<T> {
-    private index = 0;
-    private keys: string[];
+class Iterator<T> {
+    protected keys: string[];
+    protected index: number = 0;
 
-    constructor(private collection: string | T[] | { [key: string]: T }) {
+    constructor(
+        protected collection: string | T[] | { [key: string]: T }
+    ) {
         this.keys = Object.keys(collection);
     }
 
     public next(): string | T {
         const key = this.keys[this.index++];
 
-        if (typeof this.collection === 'string' || Array.isArray(this.collection)) {
+        if (Array.isArray(this.collection) || typeof this.collection === 'string') {
             return this.collection[+key];
         }
 
@@ -30,6 +29,6 @@ const arrayIterator = new Iterator([1, 2, 3, 4, 5]);
 const objectIterator = new Iterator({ a: 'a', b: 'b', c: 'c' });
 const stringIterator = new Iterator('hello');
 
-while (stringIterator.hasNext()) {
-    console.log(stringIterator.next());
+while (arrayIterator.hasNext()) {
+    console.log(arrayIterator.next());
 }
