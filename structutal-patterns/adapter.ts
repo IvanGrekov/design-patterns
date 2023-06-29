@@ -15,12 +15,12 @@ class SpecificRequester {
 }
 
 class SpecificRequesterAdapter implements IRequester {
-    constructor(protected specificAdapter: SpecificRequester) {}
+    constructor(protected specificRequester: SpecificRequester) {}
 
     public request(): string {
-        const specificAdapterResult = this.specificAdapter.specificRequest().split('').reverse().join('');
+        const specificRequesterResult = this.specificRequester.specificRequest().split('').reverse().join('');
 
-        return `ADAPTED: ${specificAdapterResult}`;
+        return `ADAPTED: ${specificRequesterResult}`;
     }
 }
 
