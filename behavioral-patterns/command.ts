@@ -9,13 +9,13 @@ class ComplexLogic {
 }
 
 interface ICommand {
-    operation(): void;
+    command(): void;
 }
 
 class SimpleCommand implements ICommand {
     constructor(private payload: string) {}
 
-    public operation() {
+    public command() {
         console.log(`SimpleCommand: printing (${this.payload})`);
     }
 }
@@ -27,7 +27,7 @@ class ComplexCommand implements ICommand {
         private payload2: string,
     ) {}
 
-    public operation() {
+    public command() {
         console.group(`ComplexCommand: operation with help of ComplexLogic`);
         this.complexLogic.doSomething(this.payload1);
         this.complexLogic.doSomethingElse(this.payload2);
@@ -48,11 +48,11 @@ class Invoker {
 
     public doSomeOperation(): void {
         console.group('Invoker: some operation');
-        this.before?.operation();
+        this.before?.command();
         console.log('------------');
         console.log('Body of some operation');
         console.log('------------');
-        this.finally?.operation();
+        this.finally?.command();
         console.groupEnd();
     }
 }
