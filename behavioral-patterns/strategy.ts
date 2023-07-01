@@ -3,7 +3,7 @@ interface IStrategy {
 }
 
 export class Context {
-    constructor(protected strategy: IStrategy) {}
+    constructor(protected data: string[], protected strategy: IStrategy) {}
 
     public setStrategy(strategy: IStrategy): void {
         this.strategy = strategy;
@@ -11,7 +11,7 @@ export class Context {
 
     public doSomeBusinessLogic(): void {
         console.log('Context: data manipulating using the strategy (not sure how it\'ll do it)');
-        const result = this.strategy.doAlgorithm(['b', 'a', 'd', 'e', 'c']);
+        const result = this.strategy.doAlgorithm(this.data);
         console.log(result.join(','));
     }
 }
@@ -28,7 +28,9 @@ class ConcreteStrategyB implements IStrategy {
     }
 }
 
-const context = new Context(new ConcreteStrategyA());
+const data = ['b', 'a', 'd', 'e', 'c'];
+
+const context = new Context(data, new ConcreteStrategyA());
 console.log('Client: Strategy is set to normal sorting.');
 context.doSomeBusinessLogic();
 
