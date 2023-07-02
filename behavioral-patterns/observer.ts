@@ -1,3 +1,5 @@
+// https://refactoring.guru/design-patterns/observer/typescript/example#example-0
+
 class Observer {
     constructor(public name: string) {}
 
@@ -11,12 +13,12 @@ class Subject {
 
     public addObserver(observer: Observer): void {
         const isExist = this.observers.includes(observer);
+
         if (isExist) {
             return console.log('Subject: Observer has been attached already');
         }
 
         this.observers.push(observer);
-        console.log(`Subject: Attached an observer ${observer.name}`);
     }
 
     public removeObserver(observer: Observer): void {
@@ -27,7 +29,6 @@ class Subject {
         }
 
         this.observers.splice(index, 1);
-        console.log(`Subject: Observer ${observer.name} removed`);
     }
 
     public notify(): void {
@@ -40,7 +41,7 @@ class Subject {
 
     public operation(): void {
         console.group('Subject: operation');
-        console.log('Subject: I\'m doing something important.');
+        console.log('Subject: I\'m doing something important');
         this.notify();
         console.groupEnd();
     }

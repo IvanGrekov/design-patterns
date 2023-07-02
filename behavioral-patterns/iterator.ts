@@ -1,8 +1,8 @@
 // https://refactoring.guru/design-patterns/iterator/typescript/example#example-0
 
 class Iterator<T> {
-    protected keys: string[];
     protected index: number = 0;
+    protected keys: string[] = [];
 
     constructor(
         protected collection: string | T[] | { [key: string]: T }
@@ -13,7 +13,7 @@ class Iterator<T> {
     public next(): string | T {
         const key = this.keys[this.index++];
 
-        if (Array.isArray(this.collection) || typeof this.collection === 'string') {
+        if (typeof this.collection === 'string' || Array.isArray(this.collection)) {
             return this.collection[+key];
         }
 
@@ -29,6 +29,6 @@ const arrayIterator = new Iterator([1, 2, 3, 4, 5]);
 const objectIterator = new Iterator({ a: 'a', b: 'b', c: 'c' });
 const stringIterator = new Iterator('hello');
 
-while (arrayIterator.hasNext()) {
-    console.log(arrayIterator.next());
+while (stringIterator.hasNext()) {
+    console.log(stringIterator.next());
 }

@@ -1,12 +1,9 @@
-interface IHandler {
-    setNextHandler(handler: IHandler): IHandler;
-    handle(request: string): string;
-}
+// https://refactoring.guru/design-patterns/chain-of-responsibility/typescript/example#example-0
 
-abstract class AbstractHandler implements IHandler {
-    protected nextHandler: IHandler | null = null;
+abstract class Handler {
+    protected nextHandler: Handler | null = null;
 
-    public setNextHandler(handler: IHandler): IHandler {
+    public setNextHandler(handler: Handler): Handler {
         this.nextHandler = handler;
 
         return handler;
@@ -21,7 +18,7 @@ abstract class AbstractHandler implements IHandler {
     }
 }
 
-class PmHandler extends AbstractHandler {
+class PmHandler extends Handler {
     public handle(request: string): string {
         if (request === 'Meeting') {
             return `PM will handle a "${request}" task`;
@@ -31,7 +28,7 @@ class PmHandler extends AbstractHandler {
     }
 }
 
-class FeHandler extends AbstractHandler {
+class FeHandler extends Handler {
     public handle(request: string): string {
         if (request === 'UI/UX') {
             return `FE will handle a "${request}" task`;
@@ -41,7 +38,7 @@ class FeHandler extends AbstractHandler {
     }
 }
 
-class BeHandler extends AbstractHandler {
+class BeHandler extends Handler {
     public handle(request: string): string {
         if (request === 'API') {
             return `BE will handle a "${request}" task`;

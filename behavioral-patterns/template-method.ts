@@ -1,63 +1,26 @@
-// abstract class Template {
-//     public templateMethod(): void {
-//         this.baseOperation1();
-//         this.requiredOperation1();
-//         this.baseOperation2();
-//         this.requiredOperation2();
-//     }
-
-//     protected baseOperation1(): void {
-//         console.log('Template: baseOperation1');
-//     }
-
-//     protected baseOperation2(): void {
-//         console.log('Template: baseOperation2');
-//     }
-
-//     protected abstract requiredOperation1(): void;
-
-//     protected abstract requiredOperation2(): void;
-// }
-
-// class ConcreteTemplate1 extends Template {
-//     protected requiredOperation1(): void {
-//         console.log('ConcreteTemplate1: custom requiredOperation1');
-//     }
-
-//     protected requiredOperation2(): void {
-//         console.log('ConcreteTemplate1: custom requiredOperation2');
-//     }
-// }
-
-// class ConcreteTemplate2 extends Template {
-//     protected requiredOperation1(): void {
-//         console.log('ConcreteTemplate2: custom requiredOperation1');
-//     }
-
-//     protected requiredOperation2(): void {
-//         console.log('ConcreteTemplate2: custom requiredOperation2');
-//     }
-// }
+// https://refactoring.guru/design-patterns/template-method/typescript/example#example-0
 
 abstract class SystemTemplate {
-    public templateMethod(): void {
-        this.baseOperation1();
-        this.requiredOperation1();
-        this.baseOperation2();
-        this.requiredOperation2();
-    }
-
     protected baseOperation1(): void {
-        console.log('Template: baseOperation1');
+        console.log('baseOperation1');
     }
 
     protected baseOperation2(): void {
-        console.log('Template: baseOperation2');
+        console.log('baseOperation2');
     }
 
     protected abstract requiredOperation1(): void;
 
     protected abstract requiredOperation2(): void;
+
+    public doSomeBusinessLogic(): void {
+        console.group('DoSomeBusinessLogic');
+        this.baseOperation1();
+        this.requiredOperation1();
+        this.baseOperation2();
+        this.requiredOperation2();
+        console.groupEnd();
+    }
 }
 
 class System1 extends SystemTemplate {
@@ -82,9 +45,9 @@ class System2 extends SystemTemplate {
 
 console.log('Same client code can work with different subclasses:');
 const system1 = new System1();
-system1.templateMethod();
+system1.doSomeBusinessLogic();
 console.log('------------');
 
 console.log('Same client code can work with different subclasses:');
 const system2 = new System2();
-system2.templateMethod();
+system2.doSomeBusinessLogic();
