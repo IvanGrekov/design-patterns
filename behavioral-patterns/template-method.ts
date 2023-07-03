@@ -1,6 +1,15 @@
 // https://refactoring.guru/design-patterns/template-method/typescript/example#example-0
 
 abstract class SystemTemplate {
+    public doSomeBusinessLogic(): void {
+        console.group('Do Some Business Logic');
+        this.baseOperation1();
+        this.requiredOperation1();
+        this.baseOperation2();
+        this.requiredOperation2();
+        console.groupEnd();
+    }
+
     protected baseOperation1(): void {
         console.log('baseOperation1');
     }
@@ -12,15 +21,6 @@ abstract class SystemTemplate {
     protected abstract requiredOperation1(): void;
 
     protected abstract requiredOperation2(): void;
-
-    public doSomeBusinessLogic(): void {
-        console.group('DoSomeBusinessLogic');
-        this.baseOperation1();
-        this.requiredOperation1();
-        this.baseOperation2();
-        this.requiredOperation2();
-        console.groupEnd();
-    }
 }
 
 class System1 extends SystemTemplate {
@@ -43,11 +43,10 @@ class System2 extends SystemTemplate {
     }
 }
 
-console.log('Same client code can work with different subclasses:');
 const system1 = new System1();
 system1.doSomeBusinessLogic();
+
 console.log('------------');
 
-console.log('Same client code can work with different subclasses:');
 const system2 = new System2();
 system2.doSomeBusinessLogic();

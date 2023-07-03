@@ -1,33 +1,33 @@
 export abstract class Developer {
     constructor(protected language: string, protected salary: number) {}
 
-    abstract work(): string;
+    public abstract work(): string;
 }
 
 class FrontendDeveloper extends Developer {
-    constructor(protected salary: number) {
-        super('Javascript', salary);
+    constructor(public salary: number) {
+        super('JavaScript', salary);
     }
 
     public work(): string {
-        return `I am frontend developer. I am working with ${this.language} for ${this.salary}`;
+        return `I am FE developer. I am working with ${this.language} for ${this.salary}`;
     }
 }
 
 class BackendDeveloper extends Developer {
-    constructor(protected salary: number) {
+    constructor(public salary: number) {
         super('Java', salary);
     }
 
     public work(): string {
-        return `I am backend developer. I am working with ${this.language} for ${this.salary}`;
+        return `I am BE developer. I am working with ${this.language} for ${this.salary}`;
     }
 }
 
 class FrontendFactory {
     protected constructor() {}
 
-    static createDeveloper(salary: number): FrontendDeveloper {
+    public static createDeveloper(salary: number): FrontendDeveloper {
         return new FrontendDeveloper(salary);
     }
 }
@@ -35,7 +35,7 @@ class FrontendFactory {
 class BackendFactory {
     protected constructor() {}
 
-    static createDeveloper(salary: number): BackendDeveloper {
+    public static createDeveloper(salary: number): BackendDeveloper {
         return new BackendDeveloper(salary);
     }
 }

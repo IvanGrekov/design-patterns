@@ -1,34 +1,36 @@
-interface IComponent {
+interface ITreeItem {
     name: string;
-    operation: () => void;
+    operation(): void;
 }
 
-class Leaf implements IComponent {
+abstract class TreeItem implements ITreeItem {
     constructor(public name: string) {}
 
+    public abstract operation(): void;
+}
+
+class Leaf extends TreeItem {
     public operation(): void {
         console.log(`Leaf "${this.name}" - operation`);
     }
 }
 
-class Composite implements IComponent {
-    protected children: IComponent[] = [];
+class Composite extends TreeItem {
+    protected children: ITreeItem[] = [];
 
-    constructor(public name: string) {}
-
-    public addChild(child: IComponent): void {
+    public addChild(child: ITreeItem): void {
         this.children.push(child);
     }
 
     public operation(): void {
         console.group(`Composite "${this.name}" - operation`);
 
-        this.children.forEach((child: IComponent) => {
+        for (const child of this.children) {
             child.operation();
-        });
+        }
 
         console.groupEnd();
-    };
+    }
 }
 
 const leaf1 = new Leaf('Leaf 1');

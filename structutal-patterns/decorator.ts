@@ -1,4 +1,9 @@
-class TraineeDeveloper {
+interface IDeveloper {
+    language: string;
+    work(): void;
+}
+
+class TraineeDeveloper implements IDeveloper {
     constructor(public language: string) {}
 
     public work() {

@@ -41,7 +41,7 @@ class Subject {
 
     public operation(): void {
         console.group('Subject: operation');
-        console.log('Subject: I\'m doing something important');
+        console.log("Subject: I'm doing something important");
         this.notify();
         console.groupEnd();
     }

@@ -1,12 +1,10 @@
 // https://refactoring.guru/design-patterns/iterator/typescript/example#example-0
 
 class Iterator<T> {
-    protected index: number = 0;
     protected keys: string[] = [];
+    protected index: number = 0;
 
-    constructor(
-        protected collection: string | T[] | { [key: string]: T }
-    ) {
+    constructor(protected collection: string | T[] | { [key: string]: T }) {
         this.keys = Object.keys(collection);
     }
 

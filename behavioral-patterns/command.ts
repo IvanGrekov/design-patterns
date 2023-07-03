@@ -1,10 +1,10 @@
 // https://refactoring.guru/design-patterns/command/typescript/example#example-0
 
-interface ICommand {
+interface Command {
     command(commandAttr: string): void;
 }
 
-class SimpleCommand implements ICommand {
+class SimpleCommand implements Command {
     constructor(private payload: string) {}
 
     public command(commandAttr: string) {
@@ -12,11 +12,11 @@ class SimpleCommand implements ICommand {
     }
 }
 
-class ComplexCommand implements ICommand {
+class ComplexCommand implements Command {
     constructor(private payload1: string, private payload2: string) {}
 
     public command(commandAttr: string) {
-        console.group(`"${commandAttr}" - SimpleCommand`);
+        console.group(`"${commandAttr}" - ComplexCommand`);
         console.log(`ComplexCommand: doing something on (${this.payload1})`);
         console.log(`ComplexCommand: doing something else on (${this.payload2})`);
         console.groupEnd();
@@ -24,14 +24,14 @@ class ComplexCommand implements ICommand {
 }
 
 class Invoker {
-    private before: ICommand | null = null;
-    private finally: ICommand | null = null;
+    private before: Command | null = null;
+    private finally: Command | null = null;
 
-    public setBefore(command: ICommand): void {
+    public setBefore(command: Command): void {
         this.before = command;
     }
 
-    public setFinally(command: ICommand): void {
+    public setFinally(command: Command): void {
         this.finally = command;
     }
 

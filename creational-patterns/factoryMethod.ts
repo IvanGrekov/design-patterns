@@ -1,26 +1,26 @@
 export abstract class Developer {
     constructor(protected language: string, protected salary: number) {}
 
-    abstract work(): string;
+    public abstract work(): string;
 }
 
 class FrontendDeveloper extends Developer {
-    constructor(protected salary: number) {
-        super('Javascript', salary);
+    constructor(public salary: number) {
+        super('JavaScript', salary);
     }
 
     public work(): string {
-        return `I am frontend developer. I am working with ${this.language} for ${this.salary}`;
+        return `I am FE developer. I am working with ${this.language} for ${this.salary}`;
     }
 }
 
 class BackendDeveloper extends Developer {
-    constructor(protected salary: number) {
+    constructor(public salary: number) {
         super('Java', salary);
     }
 
     public work(): string {
-        return `I am backend developer. I am working with ${this.language} for ${this.salary}`;
+        return `I am BE developer. I am working with ${this.language} for ${this.salary}`;
     }
 }
 
@@ -32,7 +32,7 @@ const developerMap = {
 class DeveloperFactory {
     protected constructor() {}
 
-    static createDeveloper(developerType: keyof typeof developerMap, salary: number) {
+    public static createDeveloper(developerType: keyof typeof developerMap, salary: number) {
         return new developerMap[developerType](salary);
     }
 }

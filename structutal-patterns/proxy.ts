@@ -14,7 +14,7 @@ class RemoteFile implements IRemoteFile {
                 console.log(result);
                 resolve(result);
             }, 2000);
-        }); 
+        });
     }
 }
 
@@ -30,7 +30,7 @@ class RemoteCacheableFile implements IRemoteFile {
         if (!this.cachedFile) {
             this.cachedFile = await this.remoteFile.getFile();
         } else {
-            console.log(`File from cache - ${this.path}`);
+            console.log(`File from cache - ${this.cachedFile}`);
         }
 
         return this.cachedFile;
@@ -43,6 +43,8 @@ const file = new RemoteFile('https://www.fefwwef.com/file.txt');
 //     await file.getFile();
 //     await file.getFile();
 // })();
+
+// console.log('------------------');
 
 const fileProxy = new RemoteCacheableFile('https://www.fefwwef.com/file.txt');
 

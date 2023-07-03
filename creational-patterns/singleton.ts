@@ -1,4 +1,3 @@
-
 class Singleton {
     protected static instance: Singleton;
 
@@ -12,13 +11,16 @@ class Singleton {
         return this.instance;
     }
 
-    private counter = 0;
+    protected counter = 0;
+
     public increment(): void {
         this.counter++;
     }
+
     public decrement(): void {
         this.counter--;
     }
+
     public getCounter(): number {
         return this.counter;
     }

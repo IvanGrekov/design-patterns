@@ -27,10 +27,6 @@ class ProductsService {
 class CartService {
     protected cart: IProduct[] = [];
 
-    constructor (cart: IProduct[] = []) {
-        this.cart = cart;
-    }
-
     public addToCard(product: IProduct): void {
         this.cart.push(product);
     }

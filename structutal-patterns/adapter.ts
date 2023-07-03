@@ -1,8 +1,4 @@
-interface IRequester {
-    request(): string;
-}
-
-class Requester implements IRequester {
+class Requester {
     public request(): string {
         return 'Hello';
     }
@@ -14,8 +10,10 @@ class SpecificRequester {
     }
 }
 
-class SpecificRequesterAdapter implements IRequester {
-    constructor(protected specificRequester: SpecificRequester) {}
+class SpecificRequesterAdapter extends Requester {
+    constructor(protected specificRequester: SpecificRequester) {
+        super();
+    }
 
     public request(): string {
         const specificRequesterResult = this.specificRequester.specificRequest().split('').reverse().join('');

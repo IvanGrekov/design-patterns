@@ -14,7 +14,7 @@ abstract class Handler {
             return this.nextHandler.handle(request);
         }
 
-        return 'No one can handle this request';
+        return `No one can handle "${request}" request`;
     }
 }
 

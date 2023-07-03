@@ -24,7 +24,7 @@ export class Context {
     }
 
     public doSomeBusinessLogic(): void {
-        console.group('Context: data manipulating using the strategy (not sure how it\'ll do it)');
+        console.group('Context: data manipulating using the unknown strategy');
         const result = this.strategy.doAlgorithm(this.data);
         console.log(result.join(','));
         console.groupEnd();

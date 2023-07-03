@@ -1,23 +1,22 @@
 // https://refactoring.guru/design-patterns/state/typescript/example#example-0
-
 interface IState {
     handleChange(): void;
 }
 
 class State1 implements IState {
     public handleChange(): void {
-        console.log("State1 handles the change.");
+        console.log("State1 handles the change");
     }
 }
 
 class State2 implements IState {
     public handleChange(): void {
-        console.log("State2 handles the change.");
+        console.log("State2 handles the change");
     }
 }
 
 class Context {
-    constructor(public state: IState) {}
+    constructor(protected state: IState) {}
 
     public setState(state: IState): void {
         console.log("Context sets the state.");
@@ -25,7 +24,7 @@ class Context {
     }
 
     public handleChange(): void {
-        console.group("Context handles the change.");
+        console.group("Context handles the change");
         this.state.handleChange();
         console.groupEnd();
     }

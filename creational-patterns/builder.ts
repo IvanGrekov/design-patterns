@@ -11,7 +11,11 @@ export class Developer {
 }
 
 class DeveloperBuilder extends Developer {
-    constructor(language = '', experience = 0, salary = 0) {
+    constructor(
+        language = '',
+        experience = 0,
+        salary = 0
+    ) {
         super(language, experience, salary);
     }
 
