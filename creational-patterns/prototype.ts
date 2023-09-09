@@ -1,8 +1,8 @@
-abstract class Prototype {
+export abstract class Prototype {
     public abstract clone(): Prototype;
 }
 
-export abstract class Developer extends Prototype {
+abstract class Developer extends Prototype {
     constructor(protected language: string, protected salary: number) {
         super();
     }

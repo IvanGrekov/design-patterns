@@ -1,5 +1,5 @@
 export abstract class Developer {
-    constructor(protected language: string, protected salary: number) {}
+    constructor(protected language: string, protected salary: number) { }
 
     public abstract work(): string;
 }
@@ -10,7 +10,7 @@ class FrontendDeveloper extends Developer {
     }
 
     public work(): string {
-        return `I am FE developer. I am working with ${this.language} for ${this.salary}`;
+        return `I am FE developer. I am working with ${this.language} for ${this.salary}`
     }
 }
 
@@ -20,20 +20,22 @@ class BackendDeveloper extends Developer {
     }
 
     public work(): string {
-        return `I am BE developer. I am working with ${this.language} for ${this.salary}`;
+        return `I am BE developer. I am working with ${this.language} for ${this.salary}`
     }
 }
 
-const developerMap = {
+const factoryMap = {
     FrontendDeveloper,
     BackendDeveloper,
 }
 
 class DeveloperFactory {
-    protected constructor() {}
+    protected constructor() { }
 
-    public static createDeveloper(developerType: keyof typeof developerMap, salary: number) {
-        return new developerMap[developerType](salary);
+    static createDeveloper(developer: keyof typeof factoryMap, salary: number): Developer {
+        const DeveloperClass = factoryMap[developer];
+
+        return new DeveloperClass(salary);
     }
 }
 

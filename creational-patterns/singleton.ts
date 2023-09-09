@@ -1,7 +1,7 @@
-class Singleton {
+export class Singleton {
     protected static instance: Singleton;
 
-    protected constructor() {}
+    protected constructor() { }
 
     public static getInstance(): Singleton {
         if (!this.instance) {
@@ -11,18 +11,18 @@ class Singleton {
         return this.instance;
     }
 
-    protected counter = 0;
+    protected _counter = 0;
 
     public increment(): void {
-        this.counter++;
+        this._counter++;
     }
 
     public decrement(): void {
-        this.counter--;
+        this._counter--;
     }
 
-    public getCounter(): number {
-        return this.counter;
+    public get counter(): number {
+        return this._counter;
     }
 }
 
@@ -35,5 +35,5 @@ instance1.increment();
 instance2.decrement();
 
 console.log('instance1 === instance2', instance1 === instance2);
-console.log('instance1.getCounter()', instance1.getCounter());
-console.log('instance2.getCounter()', instance2.getCounter());
+console.log('instance1.counter', instance1.counter);
+console.log('instance2.counter', instance2.counter);

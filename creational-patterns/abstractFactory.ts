@@ -1,7 +1,9 @@
 export abstract class Developer {
-    constructor(protected language: string, protected salary: number) {}
+    constructor(protected language: string, protected salary: number) { }
 
-    public abstract work(): string;
+    public work(title: string): string {
+        return `I am ${title} developer. I am working with ${this.language} for ${this.salary}`;
+    };
 }
 
 class FrontendDeveloper extends Developer {
@@ -10,7 +12,7 @@ class FrontendDeveloper extends Developer {
     }
 
     public work(): string {
-        return `I am FE developer. I am working with ${this.language} for ${this.salary}`;
+        return super.work('FE');
     }
 }
 
@@ -20,30 +22,32 @@ class BackendDeveloper extends Developer {
     }
 
     public work(): string {
-        return `I am BE developer. I am working with ${this.language} for ${this.salary}`;
+        return super.work('BE');
     }
 }
 
-class FrontendFactory {
-    protected constructor() {}
+abstract class DeveloperFactory {
+    public abstract createDeveloper(salary: number): Developer;
+}
 
-    public static createDeveloper(salary: number): FrontendDeveloper {
+class FrontendFactory extends DeveloperFactory {
+    createDeveloper(salary: number): FrontendDeveloper {
         return new FrontendDeveloper(salary);
     }
 }
 
-class BackendFactory {
-    protected constructor() {}
-
-    public static createDeveloper(salary: number): BackendDeveloper {
+class BackendFactory extends DeveloperFactory {
+    createDeveloper(salary: number): BackendDeveloper {
         return new BackendDeveloper(salary);
     }
 }
 
-const frontendDev1 = FrontendFactory.createDeveloper(1000);
-const frontendDev2 = FrontendFactory.createDeveloper(2000);
-const backendDev1 = BackendFactory.createDeveloper(2000);
-const backendDev2 = BackendFactory.createDeveloper(3000);
+const frontendFactory = new FrontendFactory();
+const backendFactory = new BackendFactory();
+const frontendDev1 = frontendFactory.createDeveloper(1000);
+const frontendDev2 = frontendFactory.createDeveloper(2000);
+const backendDev1 = backendFactory.createDeveloper(2000);
+const backendDev2 = backendFactory.createDeveloper(3000);
 
 console.log(frontendDev1.work());
 console.log(frontendDev2.work());
