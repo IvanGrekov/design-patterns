@@ -1,5 +1,5 @@
 export abstract class Developer {
-    constructor(protected language: string, protected salary: number) { }
+    constructor(protected language: string, protected salary: number) {}
 
     public abstract work(): string;
 }
@@ -10,7 +10,7 @@ class FrontendDeveloper extends Developer {
     }
 
     public work(): string {
-        return `I am FE developer. I am working with ${this.language} for ${this.salary}`
+        return `I am FE developer. I am working with ${this.language} for ${this.salary}`;
     }
 }
 
@@ -30,19 +30,19 @@ const factoryMap = {
 }
 
 class DeveloperFactory {
-    protected constructor() { }
+    protected constructor() {}
 
-    static createDeveloper(developer: keyof typeof factoryMap, salary: number): Developer {
-        const DeveloperClass = factoryMap[developer];
+    static create(creator: keyof typeof factoryMap, salary: number): Developer {
+        const DeveloperClass = factoryMap[creator];
 
         return new DeveloperClass(salary);
     }
 }
 
-const feDeveloper1 = DeveloperFactory.createDeveloper('FrontendDeveloper', 1000);
-const feDeveloper2 = DeveloperFactory.createDeveloper('FrontendDeveloper', 2000);
-const beDeveloper1 = DeveloperFactory.createDeveloper('BackendDeveloper', 2000);
-const beDeveloper2 = DeveloperFactory.createDeveloper('BackendDeveloper', 3000);
+const feDeveloper1 = DeveloperFactory.create('FrontendDeveloper', 1000);
+const feDeveloper2 = DeveloperFactory.create('FrontendDeveloper', 2000);
+const beDeveloper1 = DeveloperFactory.create('BackendDeveloper', 2000);
+const beDeveloper2 = DeveloperFactory.create('BackendDeveloper', 3000);
 
 console.log(feDeveloper1.work());
 console.log(feDeveloper2.work());

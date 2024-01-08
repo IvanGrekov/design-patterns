@@ -1,9 +1,9 @@
 export abstract class Developer {
-    constructor(protected language: string, protected salary: number) { }
+    constructor(protected language: string, protected salary: number) {}
 
     public work(title: string): string {
         return `I am ${title} developer. I am working with ${this.language} for ${this.salary}`;
-    };
+    }
 }
 
 class FrontendDeveloper extends Developer {
@@ -13,6 +13,10 @@ class FrontendDeveloper extends Developer {
 
     public work(): string {
         return super.work('FE');
+    }
+
+    public addStyles(): string {
+        return 'I am adding styles';
     }
 }
 
@@ -24,30 +28,34 @@ class BackendDeveloper extends Developer {
     public work(): string {
         return super.work('BE');
     }
+
+    public setupServer(): string {
+        return 'I am setting up server';
+    }
 }
 
 abstract class DeveloperFactory {
-    public abstract createDeveloper(salary: number): Developer;
+    public abstract create(salary: number): Developer;
 }
 
 class FrontendFactory extends DeveloperFactory {
-    createDeveloper(salary: number): FrontendDeveloper {
+    public create(salary: number): FrontendDeveloper {
         return new FrontendDeveloper(salary);
     }
 }
 
 class BackendFactory extends DeveloperFactory {
-    createDeveloper(salary: number): BackendDeveloper {
+    public create(salary: number): BackendDeveloper {
         return new BackendDeveloper(salary);
     }
 }
 
 const frontendFactory = new FrontendFactory();
 const backendFactory = new BackendFactory();
-const frontendDev1 = frontendFactory.createDeveloper(1000);
-const frontendDev2 = frontendFactory.createDeveloper(2000);
-const backendDev1 = backendFactory.createDeveloper(2000);
-const backendDev2 = backendFactory.createDeveloper(3000);
+const frontendDev1 = frontendFactory.create(1000);
+const frontendDev2 = frontendFactory.create(2000);
+const backendDev1 = backendFactory.create(2000);
+const backendDev2 = backendFactory.create(3000);
 
 console.log(frontendDev1.work());
 console.log(frontendDev2.work());
